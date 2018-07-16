@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-node-2
+  labels:
+    app: nodejs2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs2
+  template:
+    metadata:
+      labels:
+        app: nodejs2
+    spec:
+      containers:
+        - name: nodejs2
+          image: hello-node:v3
+          ports:
+          - containerPort: 8081 # exposed port
+        - name: nodejs3
+          image: hello-hello:v1
+          ports:
+          - containerPort: 8080
