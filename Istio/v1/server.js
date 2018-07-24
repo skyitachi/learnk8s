@@ -12,6 +12,11 @@ app.get("/hello", (req, res) => {
   });
 });
 
+app.get("/version", (req, res) => {
+  res.json({
+    version: "v1"
+  });
+});
 app.listen(8080, () => {
   console.log("app start ok");
 });

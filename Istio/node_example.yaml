@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: entry
+  labels:
+    app: entry
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: entry
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: entry
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: entry
+        version: v1
+    spec:
+      containers:
+      - name: entry
+        image: svc-entry:v2
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc
+  labels:
+    app: svc
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: svc
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: svc-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: svc
+        version: v1
+    spec:
+      containers:
+      - name: svc
+        image: svc:v1
+        ports:
+        - containerPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: svc-v2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: svc
+        version: v2
+    spec:
+      containers:
+      - name: svc
+        image: svc:v2
+        ports:
+        - containerPort: 8080

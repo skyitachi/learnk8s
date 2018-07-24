@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nodejs
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: nodejs
@@ -16,7 +16,13 @@ spec:
     spec:
       containers:
         - name: nodejs
-          image: hello-hello:v1
+          image: hello-node:v7
           ports:
           - containerPort: 8080 # exposed port
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
 
